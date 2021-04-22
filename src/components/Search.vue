@@ -5,28 +5,27 @@
       <input type="text" placeholder="Cari Movie Lawencon ?" v-model="s" />
       <input type="submit" value="search" />
     </form>
-    <div v-for='result in results' :key='result.imdbID'>
-        <div class="tengah">
-        <div class="card">
-            <div class="pim">
-            <div class="type">{{result.Type}}</div> 
-                <div v-if="result.Poster == 'N/A'">
-                    <img src="@/assets/img/404.jpeg" alt="Movie Poster" style="cursor:pointer;">
-                </div>
-                <div v-else>
-                    <img :src="result.Poster" alt="Movie Poster" id="show-modal" @click="imgModal(result.Poster)" style="cursor:pointer;" />
+            <div v-for='result in results' :key='result.imdbID'>
+                <div class="tengah">
+                <div class="card">
+                    <div class="pim">
+                    <div class="type">{{result.Type}}</div> 
+                        <div v-if="result.Poster == 'N/A'">
+                            <img src="@/assets/img/404.jpeg" alt="Movie Poster" style="cursor:pointer;">
+                        </div>
+                        <div v-else>
+                            <img :src="result.Poster" alt="Movie Poster" id="show-modal" @click="imgModal(result.Poster)" style="cursor:pointer;" />
+                        </div>
+                    </div>
+                <div class="containerT">
+                    <h2>{{result.Title}}</h2> 
+                        </div>
+                    </div>
                 </div>
             </div>
-        <div class="containerT">
-            <h2>{{result.Title}}</h2> 
         </div>
-        </div>
-        </div>
-        
-  </div>
-  </div>
-                    <Popup :src-id="src" v-if="showModal" @close="showModal = false" />
-  <Observer v-on:intersect="intersected" />
+        <Popup :src-id="src" v-if="showModal" @close="showModal = false" />
+        <Observer v-on:intersect="intersected" />
 </template>
 <script>
 import axios from 'axios'
