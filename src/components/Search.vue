@@ -11,10 +11,10 @@
             <div class="pim">
             <div class="type">{{result.Type}}</div> 
                 <div v-if="result.Poster == 'N/A'">
-                    <img src="@/assets/img/404.jpeg" alt="Movie Poster">
+                    <img src="@/assets/img/404.jpeg" alt="Movie Poster" style="cursor:pointer;">
                 </div>
                 <div v-else>
-                    <img :src="result.Poster" alt="Movie Poster">
+                    <img :src="result.Poster" alt="Movie Poster" id="show-modal" @click="imgModal(result.Poster)" style="cursor:pointer;" />
                 </div>
             </div>
         <div class="containerT">
@@ -22,15 +22,17 @@
         </div>
         </div>
         </div>
-    
+        
   </div>
   </div>
+                    <Popup :src-id="src" v-if="showModal" @close="showModal = false" />
   <Observer v-on:intersect="intersected" />
 </template>
 <script>
 import axios from 'axios'
 import env from '@/env.js'
 import Observer from '@/components/Observer.vue'
+import Popup from '@/components/Popup.vue'
 
 export default {
   name: 'search',
@@ -39,11 +41,14 @@ export default {
           s: '',
           p:1,
           results: [],
-          lastp: 1
+          lastp: 1,
+          showModal: false,
+          src: ''
             }
         },
         components:{
-            Observer
+            Observer,
+            Popup
         },
         methods: {
            async SearchMovies(s){
@@ -58,6 +63,11 @@ export default {
         },
         intersected(){
             this.mounted()
+        },
+         imgModal(showModal) {
+            //  console.log(showModal)
+            this.src = showModal
+            this.showModal = true
         }
     }
 }
