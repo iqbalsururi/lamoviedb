@@ -15,6 +15,7 @@
                         </div>
                         <div v-else>
                             <img :src="result.Poster" alt="Movie Poster" id="show-modal" @click="imgModal(result.Poster)" style="cursor:pointer;" />
+                            <button id="show-modall" @click="dtlModal(result.imdbID)" style="cursor:pointer;">Detail</button>
                         </div>
                     </div>
                 <div class="containerT">
@@ -24,6 +25,7 @@
                 </div>
             </div>
         </div>
+        <Detail :value="idi" v-if="showModall" @close="showModall = false" />
         <Popup :src-id="src" v-if="showModal" @close="showModal = false" />
         <Observer v-on:intersect="intersected" />
 </template>
@@ -32,6 +34,7 @@ import axios from 'axios'
 import env from '@/env.js'
 import Observer from '@/components/Observer.vue'
 import Popup from '@/components/Popup.vue'
+import Detail from '@/components/Detail.vue'
 
 export default {
   name: 'search',
@@ -42,12 +45,15 @@ export default {
           results: [],
           lastp: 1,
           showModal: false,
-          src: ''
+          showModall: false,
+          src: '',
+          idi: ''
             }
         },
         components:{
             Observer,
-            Popup
+            Popup,
+            Detail
         },
         methods: {
            async SearchMovies(s){
@@ -67,10 +73,27 @@ export default {
             //  console.log(showModal)
             this.src = showModal
             this.showModal = true
+        },
+         dtlModal(showModall) {
+            // console.log(showModall)
+            this.idi = showModall
+            this.showModall = true
         }
     }
 }
 </script>
 <style lang="scss">
-@import '@/assets/search.scss' 
+button{
+    background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 42px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 16px;
+  cursor: pointer;
+} 
+@import '@/assets/search.scss'
 </style>
